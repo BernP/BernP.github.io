@@ -1,4 +1,4 @@
-﻿body {
+body {
     background-color: #fbf7f7;
 }
 *{
@@ -386,6 +386,8 @@ h1{
 }
 
 #contact-links a{
+    color: #2d232e;
+    text-decoration: none;
     background-color: #fbf7f7;
     border-bottom: 1px solid  #fbf7f7;
     font-size: 18px;
@@ -477,6 +479,7 @@ h1{
     
 }
 .diagram-container a{
+    text-decoration: none;
     height: 100%;
     width: 100%;
     border: 1px solid #f1f0ea;
@@ -504,6 +507,8 @@ h1{
     justify-content:space-around ;
 }
 .learn-more a{
+    color: #2d232e;
+    text-decoration: none;
     border: 1px solid #fbf7f7;
     font-size: 18px;
 }
