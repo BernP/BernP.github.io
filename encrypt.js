@@ -1,23 +1,22 @@
 import { FindPosition,
     IntArrayToString, 
-    loadData, 
-    print, 
+    LoadData, 
+    Print, 
     SuffleArray, 
     EncrypLogic, 
-    getRndInteger, 
+    GetRandInt, 
     Average, 
     HashComplex, 
-    ConvertCharArrayIntoInt, 
+    ConvertCharArrayIntoInt,
     SetLoadTime,
-    TimeToEnd, 
-    ConfirmTime
-    } from './aux_functions.js';
+    TimeToEnd,
+    ConfirmTime} from './aux_functions.js';
 
 
 
 function Decrypt() {
 
-    let info = new loadData(false);
+    let info = new LoadData(false);
     SetLoadTime();
 
     if (info.stringInput[info.stringInput.length - 1] == ' ') info.stringInput = info.stringInput.pop();
@@ -59,8 +58,8 @@ function Decrypt() {
     }
 
 
-    print("output-label", "The hidden message:", "output-message", IntArrayToString(decryptedMsgArray));
-    print("output-l-salt", "Salt: ", "output-salt", "");
+    Print("output-label", "The hidden message:", "output-message", IntArrayToString(decryptedMsgArray));
+    Print("output-l-salt", "Salt: ", "output-salt", "");
 
 }
 
@@ -68,7 +67,7 @@ function Decrypt() {
 function Encrypt() {
 
     if(ConfirmTime() == false) return;
-    let info = new loadData(true);
+    let info = new LoadData(true);
     SetLoadTime();
 
     let hashKey = [5];
@@ -91,7 +90,7 @@ function Encrypt() {
 
         if ((hashKey[1].charAt(i)).charCodeAt(0) >= (hashKey[3].charAt(i)).charCodeAt(0)) {
             //Put a random number in code
-            rInt = getRndInteger(lowRandom, upperRadom);
+            rInt = GetRandInt(lowRandom, upperRadom);
             y++;
             criptedMsgArr[y] = EncrypLogic(String.fromCharCode(rInt), (hashKey[4].charAt(i)));
 
@@ -117,8 +116,8 @@ function Encrypt() {
     //----------------------
 
 
-    print("output-label", "Message encrypted:", "output-message", auxArray);
-    print("output-l-salt", "Salt: ", "output-salt", info.saltChar);
+    Print("output-label", "Message encrypted:", "output-message", auxArray);
+    Print("output-l-salt", "Salt: ", "output-salt", info.saltChar);
     return false;
 
 
