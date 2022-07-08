@@ -458,6 +458,7 @@ h1{
     max-width: 100%;
     float: left;
     margin-left: 50px;
+    min-width: 640px;
     
 }
 .about-p{
