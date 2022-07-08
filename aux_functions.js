@@ -13,18 +13,18 @@ function IntArrayToString(input) {
     return output.join('');
 }
 
-function loadData(needGenerateSalt) {
+function LoadData(needGenerateSalt) {
     var info = {
         complexNum: document.getElementById('complexity').value,
         passw: document.getElementById('password').value,
         salt: document.querySelector('input[name="salt"]:checked').value,
-        saltChar: saltCharGen(needGenerateSalt, document.querySelector('input[name="salt"]:checked').value),
+        saltChar: SaltCharGen(needGenerateSalt, document.querySelector('input[name="salt"]:checked').value),
         stringInput: document.getElementById('message').value
     };
 
     return info;
 }
-function saltCharGen(needGenerateSalt, salt) {
+function SaltCharGen(needGenerateSalt, salt) {
     if (needGenerateSalt == false) {
         if (salt == "true") return document.getElementById('saltDec').value;
         else return "";
@@ -36,7 +36,7 @@ function saltCharGen(needGenerateSalt, salt) {
 
 }
 
-function print(labelId, label, outputId, output) {
+function Print(labelId, label, outputId, output) {
     let outputMessage = document.getElementById(outputId);
     let outputLabel = document.getElementById(labelId);
 
@@ -64,7 +64,7 @@ function SuffleArray(hash, messageLength) {
         if (j == hash.length) j = 0;
         suffledA[i] = auxArray[(hash.charAt(j)).charCodeAt(0) % (auxArray.length)];
 
-        auxArray = removeFromArrayByValeu(auxArray, suffledA[i]);
+        auxArray = RemoveByValue(auxArray, suffledA[i]);
         j++;
     }
 
@@ -72,7 +72,7 @@ function SuffleArray(hash, messageLength) {
 
 }
 
-function removeFromArrayByValeu(arr, value) {
+function RemoveByValue(arr, value) {
     let removedA = [arr.length - 1];
     let j = 0;
     for (let i = 0; i < arr.length; i++) {
@@ -92,10 +92,10 @@ function SaltGenerator(saltLenght) {
     let saltArray = [];
 
     for (let i = 0; i < saltLenght; i++) {
-        numberR = getRndInteger(1, 5);
-        if (numberR == 1) saltArray[i] = String.fromCharCode(getRndInteger(48, 57));
-        else if (numberR == 2 || numberR == 3) saltArray[i] = String.fromCharCode(getRndInteger(65, 90));
-        else saltArray[i] = String.fromCharCode(getRndInteger(97, 122));
+        numberR = GetRandInt(1, 5);
+        if (numberR == 1) saltArray[i] = String.fromCharCode(GetRandInt(48, 57));
+        else if (numberR == 2 || numberR == 3) saltArray[i] = String.fromCharCode(GetRandInt(65, 90));
+        else saltArray[i] = String.fromCharCode(GetRandInt(97, 122));
     }
 
     return saltArray;
@@ -103,7 +103,7 @@ function SaltGenerator(saltLenght) {
 
 }
 
-function getRndInteger(min, max) {
+function GetRandInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
@@ -1225,11 +1225,11 @@ hash2.array();*/
 
 export { FindPosition,
     IntArrayToString, 
-    loadData, 
-    print, 
+    LoadData, 
+    Print, 
     SuffleArray, 
     EncrypLogic, 
-    getRndInteger, 
+    GetRandInt, 
     Average, 
     HashComplex, 
     ConvertCharArrayIntoInt,
