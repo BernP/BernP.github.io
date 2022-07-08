@@ -1,10 +1,10 @@
 //import { hamburger, navMenu } from './menu.js';
-import { textBoxInputAllowed,
-    showSalt,
-    textBoxSwap, 
-    saltRequired, 
-    turnOnFstSubmit, 
-    betweenEncAndDec} from './submenu_tools.js';
+import {
+    ShowSalt,
+    TextBoxSwap, 
+    SaltRequired, 
+    TurnOutputOn, 
+    BetweenEncAndDec} from './submenu_tools.js';
 
 
 
@@ -27,13 +27,10 @@ document.querySelectorAll(".nav-link").forEach(n => n.addEventListener("click", 
 }))
 //-------------------------------------
 
-
-
-
 //-------------------------------------
 //Hide or show salt box
-document.getElementById("saltOn").addEventListener("click", showSalt);
-document.getElementById("saltOff").addEventListener("click", showSalt);
+document.getElementById("saltOn").addEventListener("click", ShowSalt);
+document.getElementById("saltOff").addEventListener("click", ShowSalt);
 //-------------------------------------
 
 
@@ -47,8 +44,8 @@ document.getElementById("sub-menu-encrypter").addEventListener('click',function 
         document.getElementById("sub-menu-decrypter").classList.replace("crypter-swap-button-on", "crypter-swap-button-off");
     }
 }); 
-document.getElementById("sub-menu-encrypter").addEventListener("click", showSalt);
-document.getElementById("sub-menu-encrypter").addEventListener("click", textBoxSwap);
+document.getElementById("sub-menu-encrypter").addEventListener("click", ShowSalt);
+document.getElementById("sub-menu-encrypter").addEventListener("click", TextBoxSwap);
 //-------------------------------------
 
 
@@ -63,26 +60,22 @@ document.getElementById("sub-menu-decrypter").addEventListener('click',function 
 
     }
 });
-document.getElementById("sub-menu-decrypter").addEventListener("click", showSalt);
-document.getElementById("sub-menu-decrypter").addEventListener("click", textBoxSwap);
+document.getElementById("sub-menu-decrypter").addEventListener("click", ShowSalt);
+document.getElementById("sub-menu-decrypter").addEventListener("click", TextBoxSwap);
 //-------------------------------------
 
 
 //-------------------------------------
 //Copy button
-document.getElementById("copy-button-output").addEventListener("click", copiedButtonCssChange);
-document.getElementById("copy-button-output").addEventListener("click", copyText("copy-button-output"));
+//document.getElementById("copy-button-output").addEventListener("click", copiedButtonCssChange);
+document.getElementById("copy-button-output").addEventListener("click", CopyTxt("copy-button-output"));
 //-------------------------------------
 
 
 //-------------------------------------
 //Form submit
 document.getElementById("formEnc").addEventListener('submit', function(){
-    betweenEncAndDec();
+    BetweenEncAndDec();
 } );
 
-//-------------------------------------
-
-//-------------------------------------
-document.getElementById("message").addEventListener('keypress', textBoxInputAllowed);
 //-------------------------------------
