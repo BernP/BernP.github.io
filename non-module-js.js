@@ -1,9 +1,9 @@
-function textAllowed(event) {
+function TextAllowed(event) {
     if (document.getElementById("sub-menu-encrypter").classList.contains("crypter-swap-button-on") == true) return true;
     else if ((event.charCode >= 48 && event.charCode <= 57) || event.charCode == 32) return true;
     else return false;
 }
-function copyText(textPlaceId) {
+function CopyTxt(textPlaceId) {
     if (!textPlaceId) return;
     let text = document.getElementById(textPlaceId).innerHTML;
 
@@ -18,7 +18,7 @@ function copyText(textPlaceId) {
   
 }
 
-function copiedButtonCssChange(buttonId) {
+function CopiedBt(buttonId) {
     let bt = document.getElementById(buttonId);
     if (!bt.classList.contains('copied-button')) bt.classList.add('copied-button');
 
@@ -26,7 +26,7 @@ function copiedButtonCssChange(buttonId) {
 
 }
 
-function resetCopyButton(buttonId) {
+function ResetButton(buttonId) {
     
     let bt = document.getElementById(buttonId);
     let p = document.getElementById("initial-hided-container");
