@@ -1,18 +1,11 @@
 import { Decrypt, Encrypt } from './encrypt.js';
 
-function textBoxInputAllowed(event) {
-    if (document.getElementById("sub-menu-encrypter").classList.contains("crypter-swap-button-off") == true) return true;
-    else if ((event.charCode >= 48 && event.charCode <= 57) || event.charCode == 32) return true;
-    else return false;
-}
 
 
-function showSalt() {
+function ShowSalt() {
     //true = in decrypter (salt box just needed in decrypter)
     //false = in encrypter
     let saltToDec = document.getElementById("saltDec");
-
-
 
     if (
         document.getElementById("sub-menu-encrypter").classList.contains("crypter-swap-button-on") == true
@@ -28,12 +21,13 @@ function showSalt() {
         
 
         saltToDec.disabled = false;
-        saltRequired();
+        SaltRequired();
         saltToDec.classList.replace("saltNotShowed", "saltShowed");
     }
 }
 
-function textBoxSwap() {
+
+function TextBoxSwap() {
     let msgLabel = document.getElementById("message-label");
     let msgInput = document.getElementById("message");
 
@@ -54,11 +48,7 @@ function textBoxSwap() {
 
 
 
- 
-
-
-
-function saltRequired() {
+function SaltRequired() {
     let salt = document.querySelector('input[name="salt"]:checked').value;
     let saltToDec = document.getElementById("saltDec");
     if (salt == "true") {
@@ -72,7 +62,7 @@ function saltRequired() {
     if (document.getElementById("sub-menu-encrypter").classList.contains("crypter-swap-button-off") == true) saltToDec.removeAttribute('required');
 }
 
-function turnOnFstSubmit() {
+function TurnOutputOn() {
     let outputSalt = document.getElementById("output-salt");
 
     outputSalt.classList.add("output-after-submit-style");
@@ -108,46 +98,17 @@ function turnOnFstSubmit() {
     
 }
 
-function betweenEncAndDec() {
-    turnOnFstSubmit();
+function BetweenEncAndDec() {
+    TurnOutputOn();
     if (document.getElementById("sub-menu-encrypter").classList.contains("crypter-swap-button-on") == true) Encrypt();
     else Decrypt();
     return false;
 }
 
-function copyText(textPlaceId) {
-    if (!textPlaceId) return;
-    let text = document.getElementById(textPlaceId).innerHTML;
 
-    let inputElem = document.createElement('input');
-    inputElem.setAttribute('value', text);
-    document.body.appendChild(inputElem);
-    inputElem.select();
-
-    document.execCommand('copy');
-
-    inputElem.parentNode.removeChild(inputElem);
-}
-
-
-function copiedButtonCssChange(buttonId) {
-    let bt = document.getElementById(buttonId);
-    if (!bt.classList.contains('copied-button')) bt.classList.add('copied-button');
-
-    bt.innerText = "Copied";
-
-}
-
-function resetCopyButton(buttonId) {
-
-    let bt = document.getElementById(buttonId);
-    if (bt.classList.contains('copied-button')) bt.classList.remove('copied-button');
-    bt.innerText = "Copy";
-}
-
-export { textBoxInputAllowed,
-    showSalt,
-    textBoxSwap, 
-    saltRequired, 
-    turnOnFstSubmit, 
-    betweenEncAndDec};
+export {
+    ShowSalt,
+    TextBoxSwap, 
+    SaltRequired, 
+    TurnOutputOn, 
+    BetweenEncAndDec};
