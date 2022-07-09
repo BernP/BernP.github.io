@@ -197,14 +197,14 @@ li{
     font-size: calc(0.5vw + 10px);
 }
 .encrypter-body {
-    background-color: #534b52; /*#e0ddcf*/
+    background-color: #534b52;
     color: whitesmoke;
     width: max(100% - 40px);
    
     border: 2px solid #30323d;
     margin: 20px 20px 5px 20px;
     border-radius:5px;
-    max-height: calc(50% - 50px);
+    max-height: 50%;
 }
 .form-elements{
     margin: 10px;
