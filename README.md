@@ -1,5 +1,5 @@
 # hash_encrypter
-(Project at working. In a close future, the description will be better elaborate here.) </br></br>
+(Project at work. In a close future, the description will be better elaborate here.) </br></br>
 <h3>Proposal:</h3>
 Make a method that can create an Encrypter by a generalist approach - in other words, develop a method that can be replied to create an infinite number of encryption functions. Thus, by using this generic approach, develop an Encrypter that can hide the encrypted code in phrases or in images. Therefore, the Encrypter will be developed, at first, as a website and, after all the tests are conducted, be converted into a smartphone app.</br>
 
