@@ -4,7 +4,7 @@
 <b>Observation: The code that was post is a prototype, that was at first design to small message as input. But for the objectives of this project, the algorithm needs scalability, what is at the current moment in the main focus to be resolved. The main problems are:
 <ul>  
 <li>The difficulty to input without writing on the text box (done).</li>
-<li>The slow time to encrypt the code at the "shuffle part" for long inputs (the time to shuffle is already better closer to 1000%,  but isn't the sufficient).</li>
+<li>The slow time to encrypt the code at the "shuffle part" for long inputs (the time to shuffle is already better closer to 1000% (not figure of speech),  but isn't the sufficient; so, still in progress).</li>
 <li>Too much longer output, what needs a compressor (done).</li>
 </ul></br>
 When all tests are done and validated, the upgrade will the post here.</b>
