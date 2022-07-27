@@ -1,14 +1,8 @@
 # hash_encrypter
-(Project at work. In a close future, the description will be better elaborate here.) </br>
+(Project at work. In a close future, the description will be better elaborate here.) </br></br>
 
-<b>Observation: The code that was post is a prototype, that was at first design to small message as input. But for the objectives of this project, the algorithm needs scalability, what is at the current moment in the main focus to be resolved. The main problems are:
-<ul>  
-<li>The difficulty to input without writing on the text box (done).</li>
-<li>The slow time to encrypt the code at the "shuffle part" for long inputs (the time to shuffle is already better 1000% (not figure of speech) to this version on github, but isn't the sufficient; so, still in progress).</li>
-<li>Too much longer output, what needs a compressor (done).</li>
-</ul></br>
-When all tests are done and validated, the upgrade will the post here.</b>
-</br></br>
+<a href='https://bernp.github.io/hash-encrypter/'>Click here to acess the website!<a></br></br>
+
 <h3>Proposal:</h3>
 Make a method that can create an Encrypter by a generalist approach - in other words, develop a method that can be replied to create an infinite number of encryption functions. Thus, by using this generic approach, develop an Encrypter that can hide the encrypted code in phrases or in images. Therefore, the Encrypter will be developed, at first, as a website and, after all the tests are conducted, be converted into a smartphone app.</br>
 
