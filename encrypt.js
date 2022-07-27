@@ -2,24 +2,27 @@ import { FindPosition,
     IntArrayToString, 
     LoadData, 
     Print, 
-    SuffleArray, 
+    MakeShufflePositionArr, 
     EncrypLogic, 
     GetRandInt, 
     Average, 
     HashComplex, 
-    ConvertCharArrayIntoInt,
-    SetLoadTime,
-    TimeToEnd,
-    ConfirmTime} from './aux_functions.js';
+    ConvertCharArrayIntoInt
+} from './aux_functions.js';
+
+import {Compress, Unzip} from './compress.js';
 
 
 
 function Decrypt() {
 
+   
     let info = new LoadData(false);
-    SetLoadTime();
+    
+    info.stringInput = Unzip(info.stringInput);//console.log(info.stringInput);
 
-    if (info.stringInput[info.stringInput.length - 1] == ' ') info.stringInput = info.stringInput.pop();
+
+    //if (info.stringInput[info.stringInput.length - 1] == ' ') info.stringInput = info.stringInput.pop();
     let codeInt = info.stringInput.split(" ");
     //----------------
 
@@ -33,7 +36,8 @@ function Decrypt() {
     let realLenghtOutput = 0;
     let decryptedMsgArray = [];
 
-    let position = SuffleArray(hashKey[2], codeInt.length);
+    let position = MakeShufflePositionArr(hashKey[2], codeInt.length);
+
 
     for (let p = 0; p < codeInt.length; p++) {
 
@@ -56,7 +60,7 @@ function Decrypt() {
         j++;
         i++;
     }
-
+   
 
     Print("output-label", "The hidden message:", "output-message", IntArrayToString(decryptedMsgArray));
     Print("output-l-salt", "Salt: ", "output-salt", "");
@@ -66,10 +70,7 @@ function Decrypt() {
 
 function Encrypt() {
 
-    if(ConfirmTime() == false) return;
     let info = new LoadData(true);
-    SetLoadTime();
-
     let hashKey = [5];
     if (info.salt == "false") for (let z = 0; z < 5; z++) hashKey[z] = HashComplex(String(info.passw + z), info.complexNum);
     else for (let z = 0; z < 5; z++) hashKey[z] = HashComplex(String(info.passw + info.saltChar + z), info.complexNum);
@@ -78,7 +79,7 @@ function Encrypt() {
 
     let lowRandom = Math.floor(averageCharacterInInput * 0.8);
     let upperRadom = Math.floor(averageCharacterInInput * 1.2);
-    
+
     //------------
     let y = 0;
     let rInt;
@@ -106,17 +107,15 @@ function Encrypt() {
         }
     });
     //----------------------
-    let position = SuffleArray(hashKey[2], criptedMsgArr.length); 
+    let position = MakeShufflePositionArr(hashKey[2], criptedMsgArr.length);
     let auxArray = [criptedMsgArr.length];
 
-    
     for (let k = 0; k < criptedMsgArr.length; k++) auxArray[k] = criptedMsgArr[position[k]];
 
 
     //----------------------
-
-
-    Print("output-label", "Message encrypted:", "output-message", auxArray);
+    //console.log(auxArray.join(" "));
+    Print("output-label", "Message encrypted:", "output-message",  Compress(auxArray.join(" ")));
     Print("output-l-salt", "Salt: ", "output-salt", info.saltChar);
     return false;
 
