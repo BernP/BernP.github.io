@@ -75,7 +75,23 @@ document.getElementById("copy-button-output").addEventListener("click", CopyTxt(
 //-------------------------------------
 //Form submit
 document.getElementById("formEnc").addEventListener('submit', function(){
-    BetweenEncAndDec();
+    if(document.getElementById("message").value == '')
+    {
+        alert("You forgot to write a message!");
+    }
+    else{
+        try
+        {
+            BetweenEncAndDec();
+            
+        }
+        catch(err)
+        {   
+            console.log(err);
+            alert("Sorry, something wrong has occurred. Try again.");
+        }
+        
+    } 
 } );
 
 //-------------------------------------
