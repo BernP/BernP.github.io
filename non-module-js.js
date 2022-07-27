@@ -5,7 +5,10 @@ function TextAllowed(event) {
 }
 function CopyTxt(textPlaceId) {
     if (!textPlaceId) return;
-    let text = document.getElementById(textPlaceId).innerHTML;
+    let text = document.getElementById(textPlaceId).innerHTML; //let text = document.getElementById(textPlaceId).innerHTML;
+    text = text.replace(/&amp;/g, "&");
+    text = text.replace(/&lt;/g, "<");
+    text = text.replace(/&gt;/g, ">");
 
     let inputElem = document.createElement('input');
     inputElem.setAttribute('value', text);
@@ -39,4 +42,30 @@ function ResetButton(buttonId) {
     
 }
 
+async function openfile(){
+    let [fileHandle] = await window.showOpenFilePicker();
+    let fileData = await fileHandle.getFile();
+    let text = await fileData.text();
+    document.getElementById('message').value = text;
+}
+
+async function saveFile()
+{
+    let text = document.getElementById("output-message").innerHTML;
+    text = text.replace(/&amp;/g, "&");
+    text = text.replace(/&lt;/g, "<");
+    text = text.replace(/&gt;/g, ">");
+    try
+    {
+        let fileHandle = await window.showSaveFilePicker();
+        let stream = await fileHandle.createWritable();
+        
+        await stream.write(text);
+        await stream.close();
+    }
+    catch(err){
+        console.log(text);
+    }
+    
+}
 
