@@ -14,6 +14,7 @@ function IntArrayToString(input) {
 }
 
 function LoadData(needGenerateSalt) {
+
     var info = {
         complexNum: document.getElementById('complexity').value,
         passw: document.getElementById('password').value,
@@ -41,47 +42,145 @@ function Print(labelId, label, outputId, output) {
     let outputLabel = document.getElementById(labelId);
 
     outputLabel.innerHTML = label;
-    if (Array.isArray(output)) outputMessage.innerHTML = output.join(' ');
-    else outputMessage.innerHTML = output;
+    if (Array.isArray(output)) outputMessage.innerHTML= output.join(' ');
+    else outputMessage.innerHTML = output; //textContent
+
+    output.replace(' ', " ");
+
+   
 }
 
-function SuffleArray(hash, messageLength) {
-    
-    let suffledA = [messageLength];
-    let auxArray = [messageLength];
+function MakeShufflePositionArr(hash, messageLength) {
+    let timeStart = performance.now();
+    let shuffledA = [messageLength];
+    shuffledA.length = 0;
 
-    //The first "for" make a linear int array: Array[0] = 0 ... Array[1] = 1....
-    //The Array N will have a relation with their inside
-    for (let i = 0; i < messageLength; i++) {
-        auxArray[i] = i;
+    //For scalability proposes, here the code is breaked into ARR_SIZE arrays.
+    //Each array will be shuffle inside then self, thus will be reunited.
+    //why sqrt of messageLength? because the time to solve a arr is size^2, so, if have N full arr, and a position arr size = messageLength/N ---> time = (mL/N)^2 + N^2 ---> ... ---> best solution = sqrt(mL)
+    const FULL_ARR_SIZE = messageLength > 5000? Math.floor(Math.sqrt(messageLength)):250; //messageLength*0.0025
+    const NUMBER_OF_FULL_ARR = Math.floor(messageLength/FULL_ARR_SIZE);
+    let fullArrs = [NUMBER_OF_FULL_ARR];
+    const LAST_ARR_LENGTH = (messageLength % FULL_ARR_SIZE);     
+    let lastArr = [];
+  
+    //Transform the vector fullArr to a matrix of arrays
+    for(let i = 0; i < NUMBER_OF_FULL_ARR; i++) fullArrs[i] = [];
+
+  
+    //Pass the values to the arrays
+    for (let i = 0; i < NUMBER_OF_FULL_ARR+1; i++) 
+    {
+        if( i < NUMBER_OF_FULL_ARR)
+        {
+            for (let k = 0; k < FULL_ARR_SIZE; k++)
+            {
+                fullArrs[i][k] = k + FULL_ARR_SIZE*i;
+            } 
+        }
+        else
+        {
+            
+            for (let k = 0; k < LAST_ARR_LENGTH; k++)
+            {
+                lastArr[k] = k + FULL_ARR_SIZE*i;
+            }
+        }
+        
+        
     }
-    let j = 0;
+    //Creat an array to ordem the shuffle concat
+    let positionArr = [];
+    let positionArrSize = (messageLength < FULL_ARR_SIZE)?
+                          1
+                          :
+                          (LAST_ARR_LENGTH === 0)?
+                                                  NUMBER_OF_FULL_ARR
+                                                  :
+                                                  NUMBER_OF_FULL_ARR+1;
 
-    //The new position of a element (Ar[n]) in array is hash[n] in a circular way - if hash[n] > array.lengh, will restart the array (that is = hash[n] % array.leght)
-    
-    for (let i = 0; i < messageLength; i++) {
+    for (let i = 0; i < positionArrSize; i++)  {positionArr[i] = i;}
+    positionArr = Shuffle(HashComplex(hash+"position", 0), positionArr, positionArrSize);
 
-        if (j == hash.length) j = 0;
-        suffledA[i] = auxArray[(hash.charAt(j)).charCodeAt(0) % (auxArray.length)];
+    //Shuffle the arrays and concat
+    for(let p = 0; p < positionArrSize; p++)
+    {
+        
+        if(positionArr[p] === positionArrSize -1 && LAST_ARR_LENGTH !== 0)
+        {
+          shuffledA = (messageLength > FULL_ARR_SIZE)? 
+                shuffledA.concat(Shuffle(HashComplex(hash+String.fromCharCode(48 + p), 0), lastArr, LAST_ARR_LENGTH)) 
+                : 
+                Shuffle(HashComplex(hash+String.fromCharCode(48 + p), 0), lastArr, LAST_ARR_LENGTH);
+        }
+        else
+        {
+          shuffledA = (p> 0)? 
+                    shuffledA.concat(Shuffle(HashComplex(hash+String.fromCharCode(48 + p), 0), fullArrs[positionArr[p]], FULL_ARR_SIZE))
+                    :
+                    Shuffle(HashComplex(hash+String.fromCharCode(48 + p), 0), fullArrs[positionArr[p]], FULL_ARR_SIZE);
+        }
 
-        auxArray = RemoveByValue(auxArray, suffledA[i]);
+    }
+
+    let timeEnd = performance.now();
+    console.log("Time = " + (timeEnd-timeStart)/1000);
+    return shuffledA;
+
+}
+
+function Shuffle(parameterString, array, {arrayLength = array.length} = {})
+{
+  let newPosition,
+      q = 0,
+      y,
+      newStartIndex = 0,
+      oneBelow = null,
+      lastLoopPosition,
+      yLimit,
+      shuffledA = [],
+      auxArr = [...array],
+      j = 0,
+      hash = parameterString;
+
+  for (let i = 0; i < arrayLength; i++) 
+  {
+
+        if (j === parameterString.length)
+        {
+            hash = HashComplex(hash, 0);
+            j = 0; 
+        } 
+        newPosition = ((parameterString.charAt(j)).charCodeAt(0)) % (arrayLength - i);
+        y = 0;
+        
+        q = (newPosition> lastLoopPosition && i >0 && lastLoopPosition > 0)?oneBelow:newStartIndex;
+
+        yLimit = ((q === oneBelow && i>0)?(newPosition-lastLoopPosition+1):newPosition);
+
+        if(q !== oneBelow) oneBelow = newStartIndex;
+        if(newPosition === 0) newStartIndex++;
+        while(y < yLimit && q < arrayLength)
+        {   
+            if(auxArr[q] !== -1)
+            {
+                y++;
+                
+            }
+            q++;
+            if(y < yLimit && auxArr[q] !== -1){oneBelow = q;} 
+            
+
+        }
+        while(q < arrayLength && auxArr[q] === -1) q++;
+        lastLoopPosition = newPosition;
+        shuffledA[i] = auxArr[q];
+        auxArr[q] = -1;
+  
         j++;
     }
-
-    return suffledA;
-
+    return shuffledA;
 }
-
-function RemoveByValue(arr, value) {
-    let removedA = [arr.length - 1];
-    let j = 0;
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i] != value) { removedA[j] = arr[i]; j++ }
-
-    }
-    return removedA;
-}
-
 
 function EncrypLogic(messageChar, hashKeyChar) {
     return ((messageChar.charCodeAt(0)) + hashKeyChar.charCodeAt(0));
@@ -116,92 +215,12 @@ function Average(e) {
 }
 
 
-function TimeToEnd(){
-    let numb = document.getElementById('complexity').value;
 
-    if(numb>3)
-    {
-        //"Clean"
-        let test1 = performance.now();
-        for(let i = 0; i < 5; i++)
-        {
-            HashComplex("timeCounter", 3);
-        }
-        //
-        
-        let avrgS;
-        let avrgE;
-        const quantity = 3;
-
-        
-
-        let high = 0;
-        for(let i = 0; i<quantity; i++)
-        {
-            avrgS =  performance.now();
-            HashComplex("timeCounter", 3);
-            avrgE  =  performance.now();
-            if(avrgE - avrgS > high) high = avrgE - avrgS;
-        }
-
-        let probTimeOut = 5*(10**(numb-3))*high;
-        probTimeOut /= 1000;
-        
-        return probTimeOut;
-    }
-    else{
-        return 0.1;
-    }
-    
-}
-function Checker(time, unit){
-    var result = confirm("This will take nearly " + Math.round(time) + unit + " to be done.\nAre you sure to proceed?");
-    return result;
-
-}
-function ConfirmTime(){
-    var time = TimeToEnd();
-    let secInMin = 60;
-    let secInHour = 3600;
-    let secInDay = 86400;
-
-    if(time >= 3){
-        if(time < secInMin)
-        {
-            return Checker(time, " second(s)");
-        }
-        else if(time>= secInMin && time < secInHour)
-        {
-            time /= secInMin;
-            return Checker(time, " minute(s)");
-        }
-        else if(time>= secInHour && time < secInDay){
-            time /= secInHour;
-            return Checker(time, " hour(s)");
-
-        }
-        else{
-            time /= secInDay;
-            return Checker(time, " day(s)");
-        }
-    }
-}
-
-function SetLoadTime(){
-  
-    let progressBar = document.querySelector('.load-bar');
-    progressBar.setAttribute('id', 'play-animation');
-    let animationLoad = document.getElementById("play-animation");
-    
-    let stringTime =  String('progress-anim '+ TimeToEnd()+'s' + ' forwards');
-    animationLoad.style.animation = stringTime;
-    
-}
 
 
 
 function HashComplex(originalHash, complexity) {
-    //This function make the hash over and over again. Making the hash from a hash.
+    //This function makes the hash over and over again. Making the hash from a hash.
     //The numbers of times that the hash is made is exponecial (10 ^ complexity ---> i < Math.Pow(10, complexity) - 1).
     //This fuction makes the time to solve the criptografy bigger by the "complexity" input.
     //By this function, the avarege time to a normal 2022 computer solve one small message with a 6 long password and a complexity 5 number is 3200 ms.
@@ -210,7 +229,7 @@ function HashComplex(originalHash, complexity) {
     //The time to solve all possible messages - and than solving the criptografy - by brute force is (62^4) x (62^6) x 3200 ms
     //(62^4) x (62^6) x 3200 ms = 2,685,757,970,778,688,716,800 ms = 31,085,161,698,827 days = 85.16 billion years
     //*This calculus don't count the time necessary to validate a solution (increase the time to find a correct solution).
-    //*And just considers a linear type of solver. A more efficent solver will try to teste the more commom passwords to down the time needed.
+    //*And just considers a linear type of solver. A more efficent solver will try to test the more commom passwords to down the time needed.
 
 
     var hashOutput = originalHash;
@@ -1227,13 +1246,11 @@ export { FindPosition,
     IntArrayToString, 
     LoadData, 
     Print, 
-    SuffleArray, 
+    MakeShufflePositionArr, 
     EncrypLogic, 
     GetRandInt, 
     Average, 
     HashComplex, 
-    ConvertCharArrayIntoInt,
-    SetLoadTime,
-    TimeToEnd,
-    ConfirmTime};
+    ConvertCharArrayIntoInt
+};
 
