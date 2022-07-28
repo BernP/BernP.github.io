@@ -9,4 +9,4 @@ Make a method that can create an Encrypter by a generalist approach - in other w
 <h3>Final objective:</h3>
 Make an app that can be easily used to hide messages and photos in a way that masks that was encrypted - an ordinary person that sees the encrypted message or photo can’t even notice that it has some code hidden there.</br></br>
 
-<img id="diagram" rel="preload" src="images/diagrampng.png">
+<img id="diagram" rel="preload" src="images/complete_diagram.png">
