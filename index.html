@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hash Encrypter</title>
+
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+
+    <!-- Bootstrap import-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous"> 
+    <link href="stylesheet" rel="style.css">
+
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Montserrat&family=Rubik+Dirt&display=swap" rel="stylesheet">
+</head>
+<body class="bg-light" style="font-family: 'Montserrat', sans-serif; padding-top: 50px;" id="start">
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+        <div class="container">
+            <a href="#" style="font-family: 'Rubik Dirt', cursive;" class="navbar-brand fs-4"># Encrypter</a>
+            <button 
+                class="navbar-toggler" 
+                type="button" 
+                data-bs-toggle="collapse"
+                data-bs-target="#navmenu">
+
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="navmenu" class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="#start" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#about-section" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#faq-section" class="nav-link">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact-section" class="nav-link">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section class="p-2 text-center mt-2 border-bottom" id="home-section">
+        <div class="container p-2">
+            <button type="button" class="btn btn-outline-ligth fs-5 opacity-100 border-0" id="submenu-encrypter" data-bs-toggle="button">
+                Encrypter
+            </button>
+            <button type="button" class="btn btn-outline-ligth fs-5 opacity-50 border-0" id="submenu-decrypter" data-bs-toggle="button">
+                Decrypter
+            </button>
+            
+        </div>
+        <div class="container border border-dark rounded" style="height: Calc(100vh - 130px);">
+            <!-- MODAL / OUTPUT -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Result:</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body container">
+                            <div class="container mb-3 text-start mt-2">
+                                <div><label for="output-salt" id="output-salt-label">Salt: </label></div>
+                                <textarea id="output-salt" name="output-salt" class="form-control" style="resize: none;" onkeypress='return false'></textarea>
+                            </div>
+                            <div class="container mb-3 text-start mt-2 h-100">
+                                <div><label for="output-content" id="output-content-label">Encrypted message: </label> </div>
+                                <textarea id="output-content" name="output-content" class="w-100 form-control" style="height: 50vh; resize: none;" onkeypress='return false'></textarea>
+                            </div>
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button onclick="saveFile()" type="button" class="btn btn-secondary">Download the output</button>
+                            <button id="copy-button-output" type="button" class="btn btn-primary copy-button" onclick="CopyTxt('output-content'), CopiedBt('copy-button-output')">Copy text</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ENCRYPTER/DECRYPTER FORM -- INPUT -->
+            <form class="p-3 d-flex flex-column justify-content-start gap-2 h-100"  id="formEnc" onsubmit="return false">
+                <div class="form-floating text-start">
+                    <input type="password" class="form-control" id="password" placeholder="Password" required>
+                    <label for="password text-start">Password</label>
+                  </div>
+                <div class="form-check form-switch d-flex flex-row mt-2">
+                    <input class="form-check-input p-2" name="salt" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                    <label class="form-check-label ms-1" for="flexSwitchCheckDefault"> Do you want use salt?</label>
+                    <input type="password" id="saltDec" name="saltDec" class="form-control ms-1 invisible" style="max-width: 70px;" disabled />
+                  </div>
+                <div class="mb-3  d-flex flex-row mt-2">
+                    <label for="complexity">Complexity: </label><br />
+                    <input type="number" class="ms-1 form-control form-control-sm " style="max-width: 50px;" id="complexity" name="complexity" min="0" max="12" value="0"  />
+                    <br />
+                </div>
+                <div class="form-floating text-start">
+                    <select class="form-select form-select-sm" aria-label="output-format">
+                        <option value="1" selected>Encrypted code</option>
+                        <option value="2" disabled>Image</option>
+                        <option value="3" disabled>Text</option>
+                      </select>
+                      <label for="floatingSelect text-start">Output format</label>
+                </div>
+                
+                <div class="mb-3 text-start mt-2 h-100">
+                    <label for="message" id="message-label">Message to be encrypted:</label>
+                    <button onclick="openfile()" type="button" class="btn btn-outline-secondary btn-sm">Open file content</button><br />
+                    <textarea name="message"  id="message" class="form-control mt-2 h-75 inline-block"  placeholder="Write a message here..." style="resize: none;"></textarea> 
+                    
+                    <br />
+                </div>
+                <!-- <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Submit</button> -->
+                <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick='ResetButton("copy-button-output")'>
+                    Submit
+                </button>
+
+                
+              </form>
+        </div>
+    </section>
+    <section class="p-5 border-bottom" id="about-section">
+        <div style="height: 8px;"></div>
+        <div class="container">
+        <h1>About</h1>
+        <h4>This algorithm is a solution to a problem: how to hide information with a password. 
+            Furthermore, to solve the problem efficiently, the encrypter was design to solve 
+            three of the most important challenges in cryptography:
+        </h4>
+        <br/>
+        <div class="d-md-flex">
+            
+            <div class="">
+                
+                <span class="crypto-problems">
+                    <p>1 - Common password:
+                        <br/>
+                        The algorithm by not using the password directly, but using a virtual key that 
+                        is made by three parameths (password, salt and complexity), makes the decrypt 
+                        by guessing/using the most common passwords very difficult to be done (or 
+                        impossible in some cases).
+                    </p>
+                    <br/>
+                    <p>2 - Capacity to an ordinary person solve the code:
+                        <br/>
+                        To decrypt a code is needed four things: the code, the virtual keys parameths, 
+                        the knowledge about how to encrypt is done and capacity to decrypt. Making the 
+                        code not containing the key to solution itself, makes if a malicious person get 
+                        the code, in the most cases, won't be able to solve it. But even if an ordinary person 
+                        knows the code and the logic to decrypt he/she won't be able to decrypt "by hand", 
+                        because a simple code can need more than one million equations to be done.
+                    </p>
+                    <br/>
+                    <p>3 - Brute force attack:
+                        <br/>
+                        The algorithm has the capacity to increase the time to decrypt a single code by 
+                        rising the "complexity" number - the complexity is the exponent in a power equation 
+                        (we use 10^complexity) what result in the number of times a hash (we use hash512) is 
+                        done to make a virtual key. So, a virtual key is made by the hash of a hash in 10^complexity 
+                        numbers of time. That makes the user capable to high the time to encrypt/decrypt 
+                        based on how many operations a computer can solve by second. Thus, a brute force 
+                        attack is impracticable by the time to done that.
+                    </p>
+                </span>
+            </div>
+          
+        </div>
+        <h4>Learn more:</h4>
+                <div class="d-sm-flex mx-auto justify-content-evenly">
+                    <div class="mx-auto"><a href="https://github.com/BernP/hash-encrypter" target="_blank" >Github <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-symlink" viewBox="0 0 16 16">
+                        <path d="m11.798 8.271-3.182 1.97c-.27.166-.616-.036-.616-.372V9.1s-2.571-.3-4 2.4c.571-4.8 3.143-4.8 4-4.8v-.769c0-.336.346-.538.616-.371l3.182 1.969c.27.166.27.576 0 .742z"/>
+                        <path d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm.694 2.09A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09l-.636 7a1 1 0 0 1-.996.91H2.826a1 1 0 0 1-.995-.91l-.637-7zM6.172 2a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z"/>
+                      </svg></a></div>
+                        <div class="mx-auto"><a href="https://codepen.io/bernp/pen/vYRLqNJ" target="_blank" >Code Pen <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-code-slash" viewBox="0 0 16 16">
+                            <path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294l4-13zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0zm6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z"/>
+                          </svg></a></div>
+                        <div class="mx-auto"><a href="#" target="_blank" >White paper <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-text" viewBox="0 0 16 16">
+                            <path d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z"/>
+                            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
+                          </svg></a></div>
+                        <div class="mx-auto"><a href="https://replit.com/@BernP/Hash-Encrypter" target="_blank" >Replit <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-code-slash" viewBox="0 0 16 16">
+                            <path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294l4-13zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0zm6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z"/>
+                          </svg></a></div>        
+                </div>
+    </section>
+    <section class="p-5 border-bottom" id="faq-section">
+        <div style="height: 8px;"></div>
+        <div class="container">
+            <h1>FAQ</h1>
+        <div class="answer-box">
+            <h4 class="h-faq">What are the terms of use?</h4>
+            <p class="p-faq">The code and the website can be freely used, but this website isn't responsible for any improper use or lost.</p>
+        </div>
+        <div class="answer-box">
+            <h4 class="h-faq">Can I recover a message that was encrypted if I lost the password or the code?</h4>
+            <p class="p-faq">No. If you lost the password or the code, we haven't efficient ways to decrypt the code.</p>
+        </div>
+        <div class="answer-box">
+            <h4 class="h-faq">This website save any information that was submitted?</h4>
+            <p class="p-faq">No. No information that is submitted to be encrypted is saved or used in any other process.</p>
+        </div>
+        <div class="answer-box">
+            <h4 class="h-faq">How the encrypter code works?</h4>
+            <p class="p-faq">You can learn how this algorithm works in the <a href="#about-section">About section.</a></p>
+        </div>
+        <div class="answer-box">
+            <h4 class="h-faq">How safe is this code?</h4>
+            <p class="p-faq">The safety of this code is based on  password, salt and complexity number. Longer and not common passwords, the use of salt and complexity numbers above 5 makes this code more safe to use.</p>
+            <p class="p-faq">Isn't know any efficient method to decrypt the code without knowing the password, the complexity number and the salt. A long message that was encrypted using a six size password, salt and a complexity number of 5 have an expectation to need more than 10 billion years to be cracked up by brute force in a 2010s computer.</p>
+        </div>
+        <div class="answer-box">
+            <h4 class="h-faq">What is salt?</h4>
+            <p class="p-faq">Salt is a random string that works side by side with the password. It makes the code more difficult to be broke by brute force.</p>
+            <p class="p-faq">You can learn more about salt <a target=”_blank” href="https://en.wikipedia.org/wiki/Salt_(cryptography)">here</a>.</p>
+        </div>
+        <div class="answer-box">
+            <h4 class="h-faq">What is complexity?</h4>
+            <p class="p-faq">The complexity is a number that makes a hash of the password in exponential number of times. This make the time to decrypt bigger in exponential time. In consequence, try to solve a code by brute force get slowed in exponential time by the complexity number. Bigger the complexity, bigger the time to solve the code.</p>
+        </div>
+
+        </div>
+    </section>
+    <section class="p-5 " id="contact-section">
+        <div style="height: 8px;"></div>
+        <div class="container">
+            <h1>Contact</h1>
+            <div class="">
+                
+                <a href="https://github.com/BernP" target="_blank" class="ms-2">Github<i class="fab fa-github"></i></a>
+                <a href="" target="_blank">Linkedin<i class="fab fa-linkedin"></i></a>
+            
+            </div>
+            <form id="contact-form" onsubmit="return false" class="mt-5">
+                <div class="contact-box">
+                    <h4>Contact form:</h3>
+                </div>
+                <!-- -->
+                <div class="contact-box">
+                    <label for="name-contact" class="contact-fild textBoxCommomStyle">Name:</label>
+                    <input type="text" name="name-contact" class="form-control" placeholder="Your name"><br/>
+                </div>
+                <!-- -->
+                <div class="contact-box">
+                    <label for="email-contact" class="contact-fild textBoxCommomStyle">E-mail:</label>
+                    <input type="email" name="name-contact" class="form-control" placeholder="..@email.com"><br/>
+                </div>
+                <!-- -->
+                <div class="contact-box">
+                    <label for="message-contact" class="contact-fild textBoxCommomStyle">Message:</label><br/>
+                    
+                </div>
+                <div class="contact-box">
+                    <textarea name="message-contact" id="contact-text-box" class="form-control" style="height: 30vh;">Sorry, contact form not working yet.</textarea><br/>
+                </div>
+                <div class="contact-box">
+                    <button class="btn btn-primary" id="contact-button" onclick="alert('sorry, not working YET :/')">Send a message</button>
+                </div>
+                
+                
+            </form>
+        </div>
+    </section>
+    <div id="footer" style="height: 35px;" class="bg-dark text-center">
+        
+    </div>
+    <script type="module" src="js-files/main.js"></script>
+    <script src="js-files/non-module-js.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+</body>
+</html>
