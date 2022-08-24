@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <title>Hash Encrypter</title>
+    
+</head>
+<body id="start">
+    <header>
+        <nav class="navbar">
+            <a href="#" class="nav-brand a-navbar"><b>#</b> Encrypter</a>
+            <ul class="nav-menu">
+
+                <il class="nav-items">
+                    <a href="#start" class="nav-link a-navbar">Home</a>
+                </il>
+                <il class="nav-items between-li">
+                    <a href="#about-section" class="nav-link a-navbar">About</a>
+                </il>
+                <il class="nav-items between-li">
+                    <a href="#faq-section" class="nav-link a-navbar">FAQ</a>
+                </il>
+                <il class="nav-items  between-li">
+                    <a href="#contact-section" class="nav-link a-navbar">Contact</a>
+                </il>
+
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+    <section id="home-section">
+        <nav class="nav-submenu">
+            <ul class="inside-menu">
+                <li class="inside-items">
+                    <button class="crypter-swap-button-on cssInsideMenu" id="sub-menu-encrypter">Encrypter</button>                     
+                </li>
+                <li class="inside-items">
+                    <button class="crypter-swap-button-off cssInsideMenu" id="sub-menu-decrypter">Decrypter</button>
+                </li>
+            </ul>
+        </nav>
+        <div class="main-body">
+            <form class="encrypter-body" id="formEnc" onsubmit="return false">
+                <div class="form-elements">
+                    <label for="password">Password: </label><br />
+                    <input type="password" id="password" name="passwordEncrypter" class="textBoxCommomStyle" required />
+                </div>
+                <div class="form-elements">
+                    <label for="salt">Salt: </label>
+                    <input type="radio" id="saltOn" name="salt" value="true" />
+                    <label for="saltOn">On</label>
+                    <input type="radio" id="saltOff" name="salt" value="false" checked />
+                    <label for="saltOff">Off</label>
+                    <input type="password" id="saltDec" name="saltDec" class="textBoxCommomStyle saltNotShowed" disabled />
+    
+    
+                </div>
+                <div class="form-elements">
+                    <label for="complexity">Complexity: </label><br />
+                    <input type="number" id="complexity" name="complexity" min="0" max="12" value="0" class="textBoxCommomStyle" />
+                    <br />
+                </div>
+                <div class="form-elements">
+                    <label for="message" id="message-label">Message to be encrypted:</label>
+                    <button onclick="openfile()" type="button" class="buttons">Open file content</button><br />
+                    <textarea name="message"  id="message" class="input-text textBoxCommomStyle" placeholder="Write a message here..."></textarea> 
+                    
+                    <br />
+                </div>
+                <div class="form-elements">
+                    <button type="reset" class="buttons">Clear</button>
+                    <button type="submit" class="buttons" onclick='ResetButton("copy-button-output"); ResetButton("copy-button-salt")'>Submit</button>
+                    <br />
+                </div>
+            </form>
+            <div id="output" class="output-body">
+                <div class="load-container">
+                    <div class="load-bar">
+                    </div>
+                </div>
+                <div class="output-after-submit-style output-conteiner">
+                    <p id="output-label">
+                        <u>Instructions:</u><br/>
+                        1 -The message will be encrypted using 3 arguments: password, salt and complexity. You need to remember the three of them to decrypt your code.<br/><br/>
+                        2 - Improve the security using: longer passwords, salt and complexity above 4.<br/><br/>
+                        3 - Be careful with the complexity, higher numbers are safer, but take more time do compute (can take really long time).<br/><br/>
+                        <b>Warning: at the current moment, the encrypter is just working for text</b>
+                    </p>
+                    <button class="output-box-start-style buttons copy-button" id="copy-button-output" onclick='CopyTxt("output-message"), CopiedBt("copy-button-output"), ResetButton("copy-button-salt")' disabled> Copy </button>
+                    </div>
+                <div id="initial-hided-container" class="hided">
+                    
+                    <textarea id="output-message" class="output-text textBoxCommomStyle" onkeypress='return false' disabled></textarea><br />
+                    <div id="output-salt-container" class="">
+                        <p id="output-l-salt" class=""></p>
+                        <button class=" buttons copy-button" id="copy-button-salt" onclick='CopyTxt("output-salt"), CopiedBt("copy-button-salt"), ResetButton("copy-button-output")' disabled>Copy</button>
+                    </div><br />
+                    <textarea id="output-salt" class="textBoxCommomStyle" cols="6" rows="1" charswidth="4" onkeypress='return false' disabled></textarea>
+                    <br /><div class="output-after-submit-style  save-conteiner"><p>... or you also can: </p><button onclick="saveFile()" type="button" class="buttons">Download the output</button></div><br />
+                </div>
+               
+               
+            </div>
+        </div>
+
+    </section>
+    
+    <section id="about-section">
+        <h1>About</h1>
+        <div class="section-container">
+            
+            <div class="about-p">
+                <h4>This algorithm is a solution to a problem: how to hide information with a password. 
+                    Furthermore, to solve the problem efficiently, the encrypter was design to solve 
+                    three of the most important challenges in cryptography:
+                </h4>
+                <br/>
+                <span class="crypto-problems">
+                    <p>1 - Common password:
+                        <br/>
+                        The algorithm by not using the password directly, but using a virtual key that 
+                        is made by three parameths (password, salt and complexity), makes the decrypt 
+                        by guessing/using the most common passwords very difficult to be done (or 
+                        impossible in some cases).
+                    </p>
+                    <br/>
+                    <p>2 - Capacity to an ordinary person solve the code:
+                        <br/>
+                        To decrypt a code is needed four things: the code, the virtual keys parameths, 
+                        the knowledge about how to encrypt is done and capacity to decrypt. Making the 
+                        code not containing the key to solution itself, makes if a malicious person get 
+                        the code, in the most cases, won't be able to solve it. But even if an ordinary person 
+                        knows the code and the logic to decrypt he/she won't be able to decrypt "by hand", 
+                        because a simple code can need more than one million equations to be done.
+                    </p>
+                    <br/>
+                    <p>3 - Brute force attack:
+                        <br/>
+                        The algorithm has the capacity to increase the time to decrypt a single code by 
+                        rising the "complexity" number - the complexity is the exponent in a power equation 
+                        (we use 10^complexity) what result in the number of times a hash (we use hash512) is 
+                        done to make a virtual key. So, a virtual key is made by the hash of a hash in 10^complexity 
+                        numbers of time. That makes the user capable to high the time to encrypt/decrypt 
+                        based on how many operations a computer can solve by second. Thus, a brute force 
+                        attack is impracticable by the time to done that.
+                    </p>
+                </span>
+                <h4>Learn more:</h4>
+                <div class="learn-more">
+                    <div class="learn-container">
+                        <div class="learn-link-box"><a href="https://github.com/BernP/hash-encrypter" target="_blank" >Github - <i class="fab fa-github"></i></a></div>
+                        <div class="learn-link-box"><a href="https://codepen.io/bernp/pen/vYRLqNJ" target="_blank" >Code Pen - <i class="fab fa-codepen"></i></a></div>
+                    </div>
+                    <div class="learn-container">
+                        <div class="learn-link-box"><a href="#" target="_blank" >White paper - <i class="far fa-file"></i></a></div>
+                        <div class="learn-link-box"><a href="https://replit.com/@BernP/Hash-Encrypter" target="_blank" >Replit - <i class="fa-solid fa-code"></i></a></div>
+                    </div>          
+                </div>
+            </div>
+            <div class="diagram-container">
+                <a href="./diagramhtml.html" target=”_blank”>
+                    <img id="diagram" src="./images/diagrampng.png">
+                </a>
+            </div>
+            
+        </div>
+        
+        
+
+    </section>
+    <section id="faq-section">
+        <h1>FAQ</h1>
+        <div class="answer-box">
+            <h4 class="h-faq">What are the terms of use?</h4>
+            <p class="p-faq">The code and the website can be freely used, but this website isn't responsible for any improper use or lost.</p>
+        </div>
+        <div class="answer-box">
+            <h4 class="h-faq">Can I recover a message that was encrypted if I lost the password or the code?</h4>
+            <p class="p-faq">No. If you lost the password or the code, we haven't efficient ways to decrypt the code.</p>
+        </div>
+        <div class="answer-box">
+            <h4 class="h-faq">This website save any information that was submitted?</h4>
+            <p class="p-faq">No. No information that is submitted to be encrypted is saved or used in any other process.</p>
+        </div>
+        <div class="answer-box">
+            <h4 class="h-faq">How the encrypter code works?</h4>
+            <p class="p-faq">You can learn how this algorithm works in the <a href="#about-section">About section.</a></p>
+        </div>
+        <div class="answer-box">
+            <h4 class="h-faq">How safe is this code?</h4>
+            <p class="p-faq">The safety of this code is based on  password, salt and complexity number. Longer and not common passwords, the use of salt and complexity numbers above 5 makes this code more safe to use.</p>
+            <p class="p-faq">Isn't know any efficient method to decrypt the code without knowing the password, the complexity number and the salt. A long message that was encrypted using a six size password, salt and a complexity number of 5 have an expectation to need more than 10 billion years to be cracked up by brute force in a 2010s computer.</p>
+        </div>
+        <div class="answer-box">
+            <h4 class="h-faq">What is salt?</h4>
+            <p class="p-faq">Salt is a random string that works side by side with the password. It makes the code more difficult to be broke by brute force.</p>
+            <p class="p-faq">You can learn more about salt <a target=”_blank” href="https://en.wikipedia.org/wiki/Salt_(cryptography)">here</a>.</p>
+        </div>
+        <div class="answer-box">
+            <h4 class="h-faq">What is complexity?</h4>
+            <p class="p-faq">The complexity is a number that makes a hash of the password in exponential number of times. This make the time to decrypt bigger in exponential time. In consequence, try to solve a code by brute force get slowed in exponential time by the complexity number. Bigger the complexity, bigger the time to solve the code.</p>
+        </div>
+
+    </section>
+    <section id="contact-section">
+        <h1>Contact</h1>
+        <div id="contact-container">
+            <div id="contact-links">
+                <a href="https://github.com/BernP" target="_blank" >Github - <i class="fab fa-github"></i></a>
+                <a onclick="alert('sorry, not working YET :/')">Linkedin - <i class="fab fa-linkedin"></i></a>
+            
+            </div>
+            <form id="contact-form" onsubmit="return false">
+                <div class="contact-box">
+                    <h4>Contact form:</h3>
+                </div>
+                <!-- -->
+                <div class="contact-box">
+                    <label for="name-contact" class="contact-fild textBoxCommomStyle">Name:</label>
+                    <input type="text" name="name-contact" class="contact-fild textBoxCommomStyle" placeholder="Your name"><br/>
+                </div>
+                <!-- -->
+                <div class="contact-box">
+                    <label for="email-contact" class="contact-fild textBoxCommomStyle">E-mail:</label>
+                    <input type="email" name="name-contact" class="contact-fild textBoxCommomStyle" placeholder="..@email.com"><br/>
+                </div>
+                <!-- -->
+                <div class="contact-box">
+                    <label for="message-contact" class="contact-fild textBoxCommomStyle">Message:</label><br/>
+                    
+                </div>
+                <div class="contact-box">
+                    <textarea name="message-contact" id="contact-text-box" class="contact-fild textBoxCommomStyle input-text"></textarea><br/>
+                </div>
+                <div class="contact-box">
+                    <button class="submit" id="contact-button" onclick="alert('sorry, not working YET :/')">Send a message</button>
+                </div>
+                
+                
+            </form>
+            
+            
+        </div>
+
+    </section>
+    <script type="module" src="main.js"></script>
+    <script src="non-module-js.js"></script>
+    <script src="compress.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        
+    
+
+
+
+</body>
+</html>
