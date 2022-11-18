@@ -16,4 +16,4 @@ The mask function - that transform the compressed code into an image or text, wh
 <img id="diagram" rel="preload" src="images/complete_diagram.png">
 
 <h3>Example of the functionalities:</h3>
-<img id="diagram" rel="preload" src="images/exemple.png">
+<img id="diagram" rel="preload" src="images/example.png">
