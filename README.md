@@ -14,3 +14,6 @@ At the moment, the project can receive an input, encrypt it and compressed it (i
 The mask function - that transform the compressed code into an image or text, what impossibility an outsider individual to link the output to a possible hided message - was just passed through the theory phase (already know how it will be done), but not started the code write phase (no code about this part was done). </br></br>
 
 <img id="diagram" rel="preload" src="images/complete_diagram.png">
+
+<h3>Example of the functionalities:</h3>
+<img id="diagram" rel="preload" src="images/exemple.png">
