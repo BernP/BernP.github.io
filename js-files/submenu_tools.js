@@ -44,7 +44,7 @@ function TextBoxSwap() {
 
 
 function BetweenEncAndDec() {
-    if(ConfirmTime() == false) return;
+    if(ConfirmTime() == false) {window.location.reload(); return;} 
     else{
 
         if (document.getElementById("submenu-encrypter").classList.contains("opacity-100") == true) Encrypt();
