@@ -11,17 +11,20 @@ import { FindPosition,
 } from './aux_functions.js';
 
 import {Compress, Unzip} from './compress.js';
+import {MaskToShopList, RevertShopList} from './text_gen.js';
 
-
+MaskToShopList
 
 function Decrypt() {
 
    
     let info = new LoadData(false);
     
-    info.stringInput = Unzip(info.stringInput);//console.log(info.stringInput);
+    //Input Format manipulation
+    if(info.format == 2){info.stringInput = RevertShopList(info.stringInput);} 
+    info.stringInput = Unzip(info.stringInput);
 
-    //if (info.stringInput[info.stringInput.length - 1] == ' ') info.stringInput = info.stringInput.pop();
+    
     let codeInt = info.stringInput.split(" ");
     //----------------
 
@@ -111,10 +114,14 @@ function Encrypt() {
 
     for (let k = 0; k < criptedMsgArr.length; k++) auxArray[k] = criptedMsgArr[position[k]];
 
-    //console.log(Compress(auxArray.join(" ")));
+
     //----------------------
-    //console.log(auxArray.join(" "));
-    Print("output-content-label", "Message encrypted:", "output-content",  Compress(auxArray.join(" ")));
+    //Output format maniputalion
+    let compressedCode = Compress(auxArray.join(" "));
+
+    if(info.format == 2) Print("output-content-label", "Message encrypted:", "output-content",  MaskToShopList(compressedCode));
+    else Print("output-content-label", "Message encrypted:", "output-content",  compressedCode);
+    
     Print("output-salt-label", "Salt: ", "output-salt", info.saltChar);
     return false;
 
