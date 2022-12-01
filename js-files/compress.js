@@ -515,4 +515,4 @@ const table = MakeTable();
 //==========================================
 //==========================================
 
-export {Compress, Unzip};
+export {Compress, Unzip, table};
