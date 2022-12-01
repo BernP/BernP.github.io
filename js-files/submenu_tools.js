@@ -26,6 +26,7 @@ function ShowSalt() {
 function TextBoxSwap() {
     let msgLabel = document.getElementById("message-label");
     let msgInput = document.getElementById("message");
+    let inOutFormat = document.getElementById("in-out-format");
 
     let inEncrypterOrDecrypter = document.getElementById("submenu-encrypter").classList.contains("opacity-100");
 
@@ -34,11 +35,13 @@ function TextBoxSwap() {
     if (inEncrypterOrDecrypter == true) {
         msgLabel.innerHTML = 'Message to be encrypted:';
         msgInput.placeholder = "Write a message here...";
+        inOutFormat.innerHTML = "Output format";
 
     }
     else {
         msgLabel.innerHTML = 'Code to be decrypted:';
         msgInput.placeholder = "Write a code to be decrypted here...";
+        inOutFormat.innerHTML = "Input format";
     }
 }
 
