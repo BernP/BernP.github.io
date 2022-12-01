@@ -11,7 +11,7 @@
 
     <!-- Bootstrap import-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous"> 
-    <link href="stylesheet" rel="style.css">
+    <link href="style.css" type="text/css" rel="stylesheet" />
 
 
     <!-- Fonts -->
@@ -19,7 +19,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Montserrat&family=Rubik+Dirt&display=swap" rel="stylesheet">
 </head>
-<body class="bg-light" style="font-family: 'Montserrat', sans-serif; padding-top: 50px;" id="start">
+<body class="bg-light" id="start">
     <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
         <div class="container">
             <a href="#" style="font-family: 'Rubik Dirt', cursive;" class="navbar-brand fs-4"># Encrypter</a>
@@ -61,11 +61,11 @@
         </div>
         <div class="container border border-dark rounded" style="height: Calc(100vh - 130px);">
             <!-- MODAL / OUTPUT -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="modal-id" tabindex="-1" aria-labelledby="result-modal-label" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Result:</h5>
+                            <h5 class="modal-title" id="result-modal-label">Result:</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body container">
@@ -103,10 +103,11 @@
                     <br />
                 </div>
                 <div class="form-floating text-start">
-                    <select class="form-select form-select-sm" aria-label="output-format">
+                    <select class="form-select form-select-sm" id="format-value" aria-label="output-format">
                         <option value="1" selected>Encrypted code</option>
-                        <option value="2" disabled>Image</option>
-                        <option value="3" disabled>Text</option>
+                        <option value="2">Grocery Store list (beta)</option>
+                        <option value="3" disabled>Image</option>
+                        <option value="4" disabled>Text</option>
                       </select>
                       <label id="in-out-format" for="floatingSelect text-start">Output format</label>
                 </div>
@@ -114,12 +115,11 @@
                 <div class="mb-3 text-start mt-2 h-100">
                     <label for="message" id="message-label">Message to be encrypted:</label>
                     <button onclick="openfile()" type="button" class="btn btn-outline-secondary btn-sm">Open file content</button><br />
-                    <textarea name="message"  id="message" class="form-control mt-2 h-75 inline-block"  placeholder="Write a message here..." style="resize: none;"></textarea> 
+                    <textarea name="message"  id="message" class="form-control mt-2 h-75 inline-block"  placeholder="Write a message here..." style="resize: none;" required></textarea> 
                     
                     <br />
                 </div>
-                <!-- <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Submit</button> -->
-                <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick='ResetButton("copy-button-output")'>
+                <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-id" onclick='ResetButton("copy-button-output")'>
                     Submit
                 </button>
 
@@ -245,12 +245,12 @@
                 <!-- -->
                 <div class="contact-box">
                     <label for="name-contact" class="contact-fild textBoxCommomStyle">Name:</label>
-                    <input type="text" name="name-contact" class="form-control" placeholder="Your name"><br/>
+                    <input type="text" name="name-contact" class="form-control" placeholder="Your name"  disabled><br/>
                 </div>
                 <!-- -->
                 <div class="contact-box">
                     <label for="email-contact" class="contact-fild textBoxCommomStyle">E-mail:</label>
-                    <input type="email" name="name-contact" class="form-control" placeholder="..@email.com"><br/>
+                    <input type="email" name="name-contact" class="form-control" placeholder="..@email.com"  disabled><br/>
                 </div>
                 <!-- -->
                 <div class="contact-box">
@@ -258,10 +258,10 @@
                     
                 </div>
                 <div class="contact-box">
-                    <textarea name="message-contact" id="contact-text-box" class="form-control" style="height: 30vh;">Sorry, contact form not working yet.</textarea><br/>
+                    <textarea name="message-contact" id="contact-text-box" class="form-control" style="height: 30vh;" disabled>Sorry, contact form not working yet.</textarea><br/>
                 </div>
                 <div class="contact-box">
-                    <button class="btn btn-primary" id="contact-button" onclick="alert('sorry, not working YET :/')">Send a message</button>
+                    <button class="btn btn-primary" type="submit" id="contact-button" onclick="alert('sorry, not working YET :/')"  disabled>Send a message</button>
                 </div>
                 
                 
@@ -271,8 +271,8 @@
     <div id="footer" style="height: 35px;" class="bg-dark text-center">
         
     </div>
-    <script type="module" src="js-files/main.js"></script>
-    <script src="js-files/non-module-js.js"></script>
+    <script type="module" src="./js-files/main.js"></script>
+    <script src="./js-files/non-module-js.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 </body>
 </html>
