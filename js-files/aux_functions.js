@@ -91,7 +91,7 @@ function MakeShufflePositionArr(hash, messageLength) {
         
         
     }
-    //Creat an array to ordem the shuffle concat
+    //Create an array to ordem the shuffle concat
     let positionArr = [];
     let positionArrSize = (messageLength < FULL_ARR_SIZE)?
                           1
