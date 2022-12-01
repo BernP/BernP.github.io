@@ -22,7 +22,8 @@ function LoadData(needGenerateSalt) {
         saltChar: needGenerateSalt == false && document.getElementById('flexSwitchCheckDefault').checked == true? 
                     document.getElementById('saltDec').value
                     : SaltCharGen(document.getElementById('flexSwitchCheckDefault').checked),
-        stringInput: document.getElementById('message').value
+        stringInput: document.getElementById('message').value,
+        format: document.getElementById('format-value').value
     };
 
     return info;
