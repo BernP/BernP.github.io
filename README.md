@@ -11,7 +11,7 @@ Make an app that can be easily used to hide messages and photos in a way that ma
 
 <h3>Project current stage:</h3>
 At the moment, the project can receive an input, encrypt it and compressed it (it can be easily visualized with the encryption diagram image below). The input just can be a text - what in future will be any file type - and the output is a compacted version of an integer sequence.
-The mask function - that transform the compressed code into an image or text, what impossibility an outsider individual to link the output to a possible hided message - was just passed through the theory phase (already know how it will be done), but not started the code write phase (no code about this part was done). </br></br>
+The mask function - that transform the compressed code into an image or text, what impossibility an outsider individual to link the output to a possible hided message - is in the start of the development fase. At the moment, the encrypter code can be masked into a "grocery store list" or just stay as a code. The way of the "Mask to grocery store list" was implemented has two major problems, first is the dependency on a non-mutable database, what makes the decrypt don't work with an updated database; the second issue is a huge increment of the output length that happens. </br></br>
 
 <img id="diagram" rel="preload" src="images/complete_diagram.png">
 
