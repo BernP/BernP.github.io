@@ -5,6 +5,7 @@
   <source src="hashEncrypterSmallVersion7.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video> 
+ <video width="320" height="240" src="hashEncrypterSmallVersion7.mp4"></video> 
 
 
 <a href='https://bernp.github.io/hash-encrypter/' target="_blank">Click here to access the website!<a></br></br>
