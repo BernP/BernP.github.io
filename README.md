@@ -1,5 +1,11 @@
 # hash_encrypter
 (Project at work. In a close future, the description will be better elaborate here.) </br></br>
+<h3>Exemple of features:</h3>
+ <video width="320" height="240" controls>
+  <source src="hashEncrypterSmallVersion7.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video> 
+
 
 <a href='https://bernp.github.io/hash-encrypter/' target="_blank">Click here to access the website!<a></br></br>
 
